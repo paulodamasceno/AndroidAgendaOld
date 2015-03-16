@@ -6,26 +6,42 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.paulo.agenda.model.Contato;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
-public class ProviderActivity extends ActionBarActivity {
+
+public class ProviderActivity extends ActionBarActivity implements View.OnClickListener {
 
     public List<Contato> contatos;
+    @InjectView(R.id.recycle_view)
+    RecyclerView recyclerView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provider);
 
+        ButterKnife.inject(this);
+
         contatos = new ArrayList<Contato>();
         fetchContacts();
+
+        ContatosAdapter adapter = new ContatosAdapter(contatos,this,this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recyclerView.setAdapter(adapter);
     }
 
     public void fetchContacts() {
@@ -121,5 +137,10 @@ public class ProviderActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
