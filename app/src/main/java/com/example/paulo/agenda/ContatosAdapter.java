@@ -38,6 +38,7 @@ public class ContatosAdapter extends RecyclerView.Adapter<ContatosAdapter.ViewHo
         View view = LayoutInflater.from(context).inflate(R.layout.item_contatos,viewGroup,false);
 
         ViewHolder viewHolder = new ViewHolder(view);
+        viewHolder.btImport.setOnClickListener(onClickImport);
         return viewHolder;
     }
 
@@ -59,6 +60,8 @@ public class ContatosAdapter extends RecyclerView.Adapter<ContatosAdapter.ViewHo
         }else{
             viewHolder.contatoEmail.setText(contato.getEmail());
         }
+
+        viewHolder.btImport.setTag(i);
 
     }
 

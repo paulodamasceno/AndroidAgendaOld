@@ -1,12 +1,13 @@
 package com.example.paulo.agenda.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Paulo on 11/03/2015.
  */
-public class Contato {
+public class Contato implements Serializable {
 
     private int id;
     private String name;
@@ -15,8 +16,8 @@ public class Contato {
     private String cellphone;
     private String email;
     private String photo;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
 
     private List<String> phones;
     private List<String> emails;
@@ -82,7 +83,7 @@ public class Contato {
         this.photo = photo;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
@@ -90,7 +91,7 @@ public class Contato {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 

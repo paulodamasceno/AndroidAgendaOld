@@ -6,4 +6,5 @@
     <string name="cadastrar">Cadastrar</string>
     <string name="logar">Entrar</string>
     <string name="title_activity_provider">ProviderActivity</string>
+    <string name="title_activity_register">Cadastro</string>
 </resources>
