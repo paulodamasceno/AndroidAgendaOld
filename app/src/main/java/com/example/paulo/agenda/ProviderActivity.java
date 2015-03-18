@@ -1,31 +1,48 @@
 package com.example.paulo.agenda;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.paulo.agenda.model.Contato;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
-public class ProviderActivity extends ActionBarActivity {
+
+public class ProviderActivity extends ActionBarActivity implements View.OnClickListener {
 
     public List<Contato> contatos;
+    @InjectView(R.id.recycle_view)
+    RecyclerView recyclerView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provider);
 
+        ButterKnife.inject(this);
+
         contatos = new ArrayList<Contato>();
         fetchContacts();
+
+        ContatosAdapter adapter = new ContatosAdapter(contatos,this,this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recyclerView.setAdapter(adapter);
     }
 
     public void fetchContacts() {
@@ -103,23 +120,27 @@ public class ProviderActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int position = (Integer) v.getTag();
+        Contato contato = contatos.get(position);
+
+        Intent intent = new Intent(this, RegisterActivity.class);
+        intent.putExtra("contato",contato);
+        startActivity(intent);
     }
 }

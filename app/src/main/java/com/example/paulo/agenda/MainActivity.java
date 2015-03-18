@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity implements UserFragment.UserFragm
         getMenuInflater().inflate(R.menu.menu_main, menu);
         provider =  menu.findItem(R.id.action_import);
 
-        provider.setVisible(false);
+        //provider.setVisible(false);
 
 
         return true;

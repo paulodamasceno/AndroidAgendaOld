@@ -62,7 +62,7 @@ public class UserDAO {
             user.setNick(cursor.getString(cursor.getColumnIndex(NICK)));*/
 
 
-            user.setId(Integer.parseInt(getCursorTable(ID,cursor)));
+            user.setId(getCursorTable(ID,cursor));
             user.setUsername(getCursorTable(USERNAME, cursor));
             user.setPassword(getCursorTable(PASSWORD, cursor));
             user.setNick(getCursorTable(NICK, cursor));
