@@ -5,19 +5,20 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.example.paulo.agenda.model.User;
+import com.google.gson.Gson;
 
 /**
  * Created by Paulo on 12/03/2015.
  */
 public class Helper {
 
-    public static void saveUserPreference(Context context,String username, String password){
+    public static void saveUserPreference(Context context, User user){
         SharedPreferences sharedPreferences = context.getSharedPreferences("login",Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString("username",username);
-        editor.putString("password",password);
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        editor.putString("user",json);
 
         editor.commit();
     }
@@ -26,16 +27,14 @@ public class Helper {
     public static User getUserPreference(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences("login",Context.MODE_PRIVATE);
 
-        String username = sharedPreferences.getString("username", null);
-        String password = sharedPreferences.getString("password", null);
+        String json = sharedPreferences.getString("user", null);
 
-        if(TextUtils.isEmpty(username) || TextUtils.isEmpty(password)){
+        if(TextUtils.isEmpty(json)){
             return null;
         }
 
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
+        Gson gson = new Gson();
+        User user = gson.fromJson(json, User.class);
 
         return user;
     }

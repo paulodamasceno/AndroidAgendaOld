@@ -1,10 +1,13 @@
 package com.example.paulo.agenda.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Paulo on 11/03/2015.
  */
 public class User {
-    private int id;
+    @SerializedName("_id")
+    private String id;
     private String username;
     private String password;
     private String nick;
@@ -17,11 +20,11 @@ public class User {
         this.nick = nick;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

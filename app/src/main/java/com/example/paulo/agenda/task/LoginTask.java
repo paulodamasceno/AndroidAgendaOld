@@ -44,7 +44,7 @@ public class LoginTask extends AsyncTask<User, Void, User> {
 
 
         HttpClient httpClient = new DefaultHttpClient();
-        HttpPost post = new HttpPost();
+        HttpPost post = new HttpPost("http://192.168.0.10:3000/user/authenticate");
         post.addHeader("content-type", "application/json");
 
         try {

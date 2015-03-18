@@ -77,7 +77,7 @@ public class contactDAO {
         while (cursor.moveToNext()) {
             contato = new Contato();
 
-            contato.setId(Integer.parseInt(getCursorTable(ID, cursor)));
+            contato.setId(getCursorTable(ID, cursor));
             contato.setName(getCursorTable(NAME, cursor));
             contato.setAddress(getCursorTable(ADDRESS, cursor));
             contato.setPhone(getCursorTable(PHONE, cursor));
@@ -107,7 +107,7 @@ public class contactDAO {
 
         while (cursor.moveToNext()) {
             contato = new Contato();
-            contato.setId(Integer.parseInt(getCursorTable(ID, cursor)));
+            contato.setId(getCursorTable(ID, cursor));
             contato.setName(getCursorTable(NAME, cursor));
             contato.setAddress(getCursorTable(ADDRESS, cursor));
             contato.setPhone(getCursorTable(PHONE, cursor));

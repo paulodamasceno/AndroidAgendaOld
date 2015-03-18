@@ -1,5 +1,7 @@
 package com.example.paulo.agenda.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,8 @@ import java.util.List;
  */
 public class Contato implements Serializable {
 
-    private int id;
+    @SerializedName("_id")
+    private String id;
     private String name;
     private String address;
     private String phone;
@@ -18,6 +21,7 @@ public class Contato implements Serializable {
     private String photo;
     private double latitude;
     private double longitude;
+    private String userId;
 
     private List<String> phones;
     private List<String> emails;
@@ -27,11 +31,11 @@ public class Contato implements Serializable {
         emails = new ArrayList<>();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -83,22 +87,6 @@ public class Contato implements Serializable {
         this.photo = photo;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(float longitude) {
-        this.longitude = longitude;
-    }
-
     public List<String> getPhones() {
         return phones;
     }
@@ -113,5 +101,29 @@ public class Contato implements Serializable {
 
     public void setEmails(List<String> emails) {
         this.emails = emails;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userID) {
+        this.userId = userID;
     }
 }

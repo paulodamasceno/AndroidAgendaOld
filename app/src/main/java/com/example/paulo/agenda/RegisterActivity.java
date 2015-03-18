@@ -1,5 +1,6 @@
 package com.example.paulo.agenda;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -10,8 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.paulo.agenda.model.Contato;
+import com.example.paulo.agenda.model.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.Response;
 import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
@@ -67,12 +76,25 @@ public class RegisterActivity extends BaseActivity {
             if(!TextUtils.isEmpty(contato.getPhoto())){
                 Picasso.with(this).load(contato.getPhoto()).into(fotoContato);
             }
+        }else{
+            contato = new Contato();
         }
 
     }
 
     @OnClick(R.id.bt_salvarContato)
     public void onClickSave(View view){
+
+        contato.setName(nomeContato.getText().toString());
+        contato.setEmail(emailContato.getText().toString());
+        contato.setPhone(phoneContato.getText().toString());
+        contato.setAddress(addressContato.getText().toString());
+        contato.setCellphone(cellPhoneContato.getText().toString());
+
+        User user = Helper.getUserPreference(this);
+        contato.setUserId(user.getId());
+
+        saveContato(contato);
 
     }
 
@@ -114,5 +136,36 @@ public class RegisterActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveContato(Contato contato){
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        Ion.with(this)
+                .load("http://192.168.0.10:3000/contacts")
+                .progressDialog(progressDialog)
+                .setJsonPojoBody(contato)
+                .asJsonObject()
+                .withResponse()
+                .setCallback( new FutureCallback<Response<JsonObject>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<JsonObject> result) {
+                        if(result != null){
+                            if(result.getHeaders().code() == 200){
+                                Gson gson = new Gson();
+                                Contato contato1 = gson.fromJson(result.getResult(),Contato.class);
+                                Toast.makeText(RegisterActivity.this,"Contato Cadastrado Com Sucesso",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }else{
+                            Toast.makeText(RegisterActivity.this,"Não foi possivel cadastrar o contato",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+    }
+
+    private void  editContato(Contato contato){
+
     }
 }
